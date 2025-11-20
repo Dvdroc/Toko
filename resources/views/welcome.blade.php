@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DavidBakery</title>
+    <title>Bakery</title>
     @vite('resources/css/app.css')
 </head>
 
@@ -23,10 +23,14 @@
                 <li><a href="#" class="hover:text-yellow-300">Dashboard</a></li>
                 <li><a href="#" class="hover:text-yellow-300">Contacts</a></li>
                 <li><a href="#" class="hover:text-yellow-300">About</a></li>
-                <li>
+                <li class="flex items-center gap-2">
                     <a  href="{{ route('login') }}""
                        class="border border-white px-5 py-2 rounded-full hover:bg-white hover:text-black transition">
                         Login
+                    </a>
+                    <a  href="{{ route('register') }}""
+                       class="border border-white px-5 py-2 rounded-full hover:bg-white hover:text-black transition">
+                        Register
                     </a>
                 </li>
             </ul>
