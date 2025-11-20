@@ -7,8 +7,7 @@
 
         <!-- Email Address -->
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            <x-text-input id="email"  placeholder="Email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
@@ -37,7 +36,7 @@
                 </a>
             @endif 
 
-            <x-primary-button class="ms-3">
+            <x-primary-button class="w-full flex justify-center bg-pink-500 hover:bg-pink-600 text-white py-3 rounded-lg font-bold">
                 {{ __('masuk') }}
         </x-primary-button>
         </div>
