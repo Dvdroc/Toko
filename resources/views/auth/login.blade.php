@@ -7,17 +7,14 @@
 
         <!-- Email Address -->
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            <x-text-input id="email"  placeholder="Email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
         <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
+            <x-text-input id="password" class="w-full border rounded-lg p-3"
+                            placeholder="Password"
                             name="password"
                             required autocomplete="current-password" />
 
@@ -37,11 +34,10 @@
                 <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
                     {{ __('Forgot your password?') }}
                 </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
+            @endif 
         </div>
+            <x-primary-button class="w-full flex justify-center bg-pink-500 hover:bg-pink-600 text-white py-3 rounded-lg font-bold">
+                {{ __('masuk') }}
+            </x-primary-button>
     </form>
 </x-guest-layout>

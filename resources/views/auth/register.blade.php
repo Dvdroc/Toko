@@ -43,10 +43,9 @@
             <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
                 {{ __('Already registered?') }}
             </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
         </div>
+        <x-primary-button class="w-full flex justify-center bg-pink-500 hover:bg-pink-600 text-white py-3 rounded-lg font-bold">
+                {{ __('Register') }}
+        </x-primary-button>
     </form>
 </x-guest-layout>

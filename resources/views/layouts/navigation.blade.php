@@ -1,6 +1,6 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 fixed top-0 left-0 w-full z-50 shadow">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
@@ -9,17 +9,30 @@
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
-
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div>
             </div>
+                <!-- Navigation Links -->
+                <div class="flex flex-1 flex-wrap justify-end gap-4 sm:gap-8">
+                    <div class="flex items-center gap-9">
+                    <!-- Home -->
+                    <a class="text-[#1b0d11] text-sm font-medium leading-normal" href="{{ route('dashboard') }}">Home</a>
+                    <!-- All Cakes -->
+                    <a class="text-[#1b0d11] text-sm font-medium leading-normal" href="{{ route('allcake') }}">All Cakes</a>
+                    <!-- Custom Cake -->
+                    <a class="text-[#1b0d11] text-sm font-medium leading-normal" href="{{ route('custom') }}">Custom Cake</a>
+                    <!--FAQ-->
+                    <!-- List Pesanan -->
+                    <a class="text-[#1b0d11] text-sm font-medium leading-normal" href="{{ route('list-pesanan') }}">List Pesanan</a>
+                    <!-- About -->
+                    <!-- Constact Us -->
+                    <a href="{{ route('Contact') }}"
+                    class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-[#ee2b5c] text-[#fcf8f9] text-sm font-bold leading-normal tracking-[0.015em]">
+                    <span class="truncate">Contact Us</span>
+                    </a>
+                </div>
+            
 
             <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
+            <div class="hidden sm:flex sm:items-center">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">

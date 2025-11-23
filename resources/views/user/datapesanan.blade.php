@@ -1,326 +1,283 @@
-<html>
+<x-app-layout>
+    <div class="relative flex size-full min-h-screen flex-col bg-[#fcf8f9] group/design-root overflow-x-hidden" style='font-family: Epilogue, "Noto Sans", sans-serif;'>
+        <div class="layout-container flex h-full grow flex-col">
 
-<head>
-    <title>List Pesanan</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="cake.js"></script>
-</head>
+            <!-- Navigation Bar -->
+            <!-- Main Content -->
+            <main class="flex-grow pt-24 px-8 pb-16">
+                <div class="max-w-6xl mx-auto">
+                    <h1 class="text-3xl font-bold text-[#ee2b5c] mb-8">Daftar Pesanan</h1>
 
-<body>
-<div class="relative flex size-full min-h-screen flex-col bg-[#fcf8f9] group/design-root overflow-x-hidden" style='font-family: Epilogue, "Noto Sans", sans-serif;'>
-    <div class="layout-container flex h-full grow flex-col">
+                    <!-- Search and Filter Controls -->
+                    <div class="flex flex-wrap gap-4 mb-6">
+                        <input type="text" id="searchInput" placeholder="Cari nama atau jenis kue..."
+                            class="flex-grow px-4 py-2 border rounded-lg focus:ring-2 focus:ring-pink-400">
 
-        <!-- Navigation Bar -->
-        <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f3e7ea] px-10 py-3 bg-[#fcf8f9] shadow-md">
-            <!-- Bakery -->
-            <div class="flex items-center gap-4 text-[#1b0d11]">
-              <div class="size-4">
-                  <defs>
-                    <clipPath id="clip0_6_319"><rect width="48" height="48" fill="white"></rect></clipPath>
-                  </defs>
-              </div>
-              <h2 class="text-[#1b0d11] text-lg font-bold leading-tight tracking-[-0.015em]">Bakery</h2>
-            </div>
-            <div class="flex flex-1 justify-end gap-8">
-              <div class="flex items-center gap-9">
-                <!-- Home -->
-                <a class="text-[#1b0d11] text-sm font-medium leading-normal" href="Home.html">Home</a>
-                <!-- All Cakes -->
-                <a class="text-[#1b0d11] text-sm font-medium leading-normal" href="Home.html#all-cakes">All Cakes</a>
-                <!-- Custom Cake -->
-                <a class="text-[#1b0d11] text-sm font-medium leading-normal" href="Custom.html">Custom Cake</a>
-                <!--FAQ-->
-                <a class="text-[#1b0d11] text-sm font-medium leading-normal" href="FAQ.html">FAQ</a>
-                <!-- List Pesanan -->
-                <a class="text-[#1b0d11] text-sm font-medium leading-normal" href="datapesanan.html">List Pesanan</a>
-                <!-- About -->
-                <a class="text-[#1b0d11] text-sm font-medium leading-normal" href="about.html">About</a>
-                <button class="text-[#1b0d11] text-sm font-medium leading-normal" onclick="logout()" >Logout</button>
-              </div>
-              <!-- Constact Us -->
-              <a href="kontak.html"
-                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-[#ee2b5c] text-[#fcf8f9] text-sm font-bold leading-normal tracking-[0.015em]">
-                <span class="truncate">Contact Us</span>
-            </a>
-            </div>
-        </header>
-
-        <!-- Main Content -->
-        <main class="flex-grow pt-24 px-8 pb-16">
-            <div class="max-w-6xl mx-auto">
-                <h1 class="text-3xl font-bold text-[#ee2b5c] mb-8">Daftar Pesanan</h1>
-
-                <!-- Search and Filter Controls -->
-                <div class="flex flex-wrap gap-4 mb-6">
-                    <input type="text" id="searchInput" placeholder="Cari nama atau jenis kue..."
-                           class="flex-grow px-4 py-2 border rounded-lg focus:ring-2 focus:ring-pink-400">
-
-                    <select id="filterJenis" class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-pink-400">
-                        <option value="">Semua Jenis Kue</option>
-                        <option value="bikang">Bikang</option>
-                        <option value="bolu">Bolu</option>
-                        <option value="lemper">Lemper</option>
-                    </select>
-
-                    <button id="clearFilters"
-                            class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg">
-                        Reset Filter
-                    </button>
-
-                    <button id="clearAllData"
-                            class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg ml-auto">
-                        Hapus Semua Data
-                    </button>
-                </div>
-
-                <!-- Orders Table -->
-                <div class="overflow-x-auto bg-white rounded-xl shadow-lg">
-                    <table class="min-w-full divide-y divide-gray-200 border" id="ordersTable">
-                        <thead class="bg-[#f3e7ea] text-[#1b0d11]">
-                        <tr>
-                            <th class="px-4 py-3 text-left">Tanggal</th>
-                            <th class="px-4 py-3 text-left">Nama</th>
-                            <th class="px-4 py-3 text-left">No HP</th>
-                            <th class="px-4 py-3 text-left">Jenis Kue</th>
-                            <th class="px-4 py-3 text-left">Jumlah</th>
-                            <th class="px-4 py-3 text-left">Opsi</th>
-                            <th class="px-4 py-3 text-left">Kemasan</th>
-                            <th class="px-4 py-3 text-left">Aksi</th>
-                        </tr>
-                        </thead>
-                        <tbody id="ordersTableBody">
-                        <!-- Order rows will be inserted here -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Modal Edit Order -->
-                <div id="editModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-                    <div class="bg-white p-6 rounded-lg w-full max-w-md">
-                    <h2 class="text-xl font-bold mb-4">Edit Pesanan</h2>
-                    <form id="editForm">
-                        <input type="hidden" id="edit-id">
-                
-                        <label class="block mb-2">Nama</label>
-                        <input type="text" id="edit-nama" class="w-full border p-2 mb-3">
-                
-                        <label class="block mb-2">No HP</label>
-                        <input type="text" id="edit-hp" class="w-full border p-2 mb-3">
-                
-                        <label class="block mb-2">Jenis Kue</label>
-                        <select id="edit-kue" class="w-full border p-2 mb-3"></select>
-                
-                        <label class="block mb-2">Jumlah</label>
-                        <input type="number" id="edit-jumlah" class="w-full border p-2 mb-3">
-                
-                        <label class="block mb-2">Opsi</label>
-                        <select id="edit-opsi" class="w-full border p-2 mb-3">
+                        <select id="filterJenis" class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-pink-400">
+                            <option value="">Semua Jenis Kue</option>
+                            <option value="bikang">Bikang</option>
+                            <option value="bolu">Bolu</option>
+                            <option value="lemper">Lemper</option>
                         </select>
-                
-                        <label class="block mb-2">Kemasan</label>
-                        <select id="edit-kemasan" class="w-full border p-2 mb-4">
-                        <option value="mika">Mika</option>
-                        <option value="plastik clip">Plastik Clip</option>
-                        </select>
-                
-                        <div class="flex justify-end gap-2">
-                        <button type="button" onclick="closeEditModal()" class="bg-gray-300 px-4 py-2 rounded">Batal</button>
-                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Simpan</button>
+
+                        <button id="clearFilters"
+                                class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg">
+                            Reset Filter
+                        </button>
+
+                        <button id="clearAllData"
+                                class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg ml-auto">
+                            Hapus Semua Data
+                        </button>
+                    </div>
+
+                    <!-- Orders Table -->
+                    <div class="overflow-x-auto bg-white rounded-xl shadow-lg">
+                        <table class="min-w-full divide-y divide-gray-200 border" id="ordersTable">
+                            <thead class="bg-[#f3e7ea] text-[#1b0d11]">
+                            <tr>
+                                <th class="px-4 py-3 text-left">Tanggal</th>
+                                <th class="px-4 py-3 text-left">Nama</th>
+                                <th class="px-4 py-3 text-left">No HP</th>
+                                <th class="px-4 py-3 text-left">Jenis Kue</th>
+                                <th class="px-4 py-3 text-left">Jumlah</th>
+                                <th class="px-4 py-3 text-left">Opsi</th>
+                                <th class="px-4 py-3 text-left">Kemasan</th>
+                                <th class="px-4 py-3 text-left">Aksi</th>
+                            </tr>
+                            </thead>
+                            <tbody id="ordersTableBody">
+                            <!-- Order rows will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Modal Edit Order -->
+                    <div id="editModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                        <div class="bg-white p-6 rounded-lg w-full max-w-md">
+                        <h2 class="text-xl font-bold mb-4">Edit Pesanan</h2>
+                        <form id="editForm">
+                            <input type="hidden" id="edit-id">
+                    
+                            <label class="block mb-2">Nama</label>
+                            <input type="text" id="edit-nama" class="w-full border p-2 mb-3">
+                    
+                            <label class="block mb-2">No HP</label>
+                            <input type="text" id="edit-hp" class="w-full border p-2 mb-3">
+                    
+                            <label class="block mb-2">Jenis Kue</label>
+                            <select id="edit-kue" class="w-full border p-2 mb-3"></select>
+                    
+                            <label class="block mb-2">Jumlah</label>
+                            <input type="number" id="edit-jumlah" class="w-full border p-2 mb-3">
+                    
+                            <label class="block mb-2">Opsi</label>
+                            <select id="edit-opsi" class="w-full border p-2 mb-3">
+                            </select>
+                    
+                            <label class="block mb-2">Kemasan</label>
+                            <select id="edit-kemasan" class="w-full border p-2 mb-4">
+                            <option value="mika">Mika</option>
+                            <option value="plastik clip">Plastik Clip</option>
+                            </select>
+                    
+                            <div class="flex justify-end gap-2">
+                            <button type="button" onclick="closeEditModal()" class="bg-gray-300 px-4 py-2 rounded">Batal</button>
+                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Simpan</button>
+                            </div>
+                        </form>
                         </div>
-                    </form>
+                    </div>
+    
+                    <!-- No Orders Message -->
+                    <div id="noOrdersMessage" class="hidden text-center py-10 text-gray-500 font-medium">
+                        Belum ada pesanan tersimpan
                     </div>
                 </div>
-  
-                <!-- No Orders Message -->
-                <div id="noOrdersMessage" class="hidden text-center py-10 text-gray-500 font-medium">
-                    Belum ada pesanan tersimpan
-                </div>
-            </div>
-        </main>
+            </main>
+        </div>
     </div>
-</div>
 
-<script>
-    // Function to load orders from localStorage and display in table
-    function loadOrders() {
-        const ordersTableBody = document.getElementById('ordersTableBody');
-        const noOrdersMessage = document.getElementById('noOrdersMessage');
-        const searchInput = document.getElementById('searchInput').value.toLowerCase();
-        const filterJenis = document.getElementById('filterJenis').value;
+    <script>
+        // Function to load orders from localStorage and display in table
+        function loadOrders() {
+            const ordersTableBody = document.getElementById('ordersTableBody');
+            const noOrdersMessage = document.getElementById('noOrdersMessage');
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const filterJenis = document.getElementById('filterJenis').value;
 
-        // Get orders from localStorage
-        let orders = JSON.parse(localStorage.getItem('bakeryOrders') || '[]');
-
-        // Apply filters if any
-        if (searchInput || filterJenis) {
-            orders = orders.filter(order => {
-                const matchesSearch = searchInput ?
-                    (order.nama.toLowerCase().includes(searchInput) ||
-                        order.jenisKue.toLowerCase().includes(searchInput)) : true;
-
-                const matchesFilter = filterJenis ?
-                    order.jenisKue === filterJenis : true;
-
-                return matchesSearch && matchesFilter;
-            });
-        }
-
-        // Clear the current table
-        ordersTableBody.innerHTML = '';
-
-        // Show message if no orders
-        if (orders.length === 0) {
-            noOrdersMessage.classList.remove('hidden');
-            return;
-        }
-
-        // Hide message if there are orders
-        noOrdersMessage.classList.add('hidden');
-
-        // Sort orders by date (newest first)
-        orders.sort((a, b) => b.id - a.id);
-
-        // Add each order to the table
-        orders.forEach(order => {
-            const row = document.createElement('tr');
-            row.classList.add('border-b', 'hover:bg-[#fcf8f9]');
-
-            row.innerHTML = `
-                <td class="border px-4 py-3 text-sm whitespace-nowrap">${order.date}</td>
-                <td class="border px-4 py-3 text-sm whitespace-nowrap">${order.nama}</td>
-                <td class="border px-4 py-3 text-sm whitespace-nowrap">${order.hp}</td>
-                <td class="border px-4 py-3 text-sm whitespace-nowrap">${order.jenisKue}</td>
-                <td class="border px-4 py-3 text-sm whitespace-nowrap">${order.jumlah}</td>
-                <td class="border px-4 py-3 text-sm whitespace-nowrap">${order.opsi}</td>
-                <td class="border px-4 py-3 text-sm whitespace-nowrap">${order.kemasan}</td>
-                <td class="class="border px-4 py-3 text-sm whitespace-nowrap space-x-2">
-                    <button class="edit-btn text-blue-500 hover:text-blue-700" data-id="${order.id}">
-                        Edit
-                    </button>
-                    <br>
-                    <button class="delete-btn text-red-500 hover:text-red-700" data-id="${order.id}">
-                        Hapus
-                    </button>
-                </td>
-
-            `;
-
-            ordersTableBody.appendChild(row);
-        });
-
-        // Add event listeners to delete buttons
-        document.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const id = parseInt(this.getAttribute('data-id'));
-                deleteOrder(id);
-            });
-        });
-        // Add event listeners to edit buttons
-        document.querySelectorAll('.edit-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const id = parseInt(this.getAttribute('data-id'));
-                editOrder(id);
-            });
-        });
-
-    }
-
-    // Function to delete a specific order
-    function deleteOrder(id) {
-        if (confirm('Yakin ingin menghapus pesanan ini?')) {
+            // Get orders from localStorage
             let orders = JSON.parse(localStorage.getItem('bakeryOrders') || '[]');
-            orders = orders.filter(order => order.id !== id);
-            localStorage.setItem('bakeryOrders', JSON.stringify(orders));
-            loadOrders(); // Refresh the table
+
+            // Apply filters if any
+            if (searchInput || filterJenis) {
+                orders = orders.filter(order => {
+                    const matchesSearch = searchInput ?
+                        (order.nama.toLowerCase().includes(searchInput) ||
+                            order.jenisKue.toLowerCase().includes(searchInput)) : true;
+
+                    const matchesFilter = filterJenis ?
+                        order.jenisKue === filterJenis : true;
+
+                    return matchesSearch && matchesFilter;
+                });
+            }
+
+            // Clear the current table
+            ordersTableBody.innerHTML = '';
+
+            // Show message if no orders
+            if (orders.length === 0) {
+                noOrdersMessage.classList.remove('hidden');
+                return;
+            }
+
+            // Hide message if there are orders
+            noOrdersMessage.classList.add('hidden');
+
+            // Sort orders by date (newest first)
+            orders.sort((a, b) => b.id - a.id);
+
+            // Add each order to the table
+            orders.forEach(order => {
+                const row = document.createElement('tr');
+                row.classList.add('border-b', 'hover:bg-[#fcf8f9]');
+
+                row.innerHTML = `
+                    <td class="border px-4 py-3 text-sm whitespace-nowrap">${order.date}</td>
+                    <td class="border px-4 py-3 text-sm whitespace-nowrap">${order.nama}</td>
+                    <td class="border px-4 py-3 text-sm whitespace-nowrap">${order.hp}</td>
+                    <td class="border px-4 py-3 text-sm whitespace-nowrap">${order.jenisKue}</td>
+                    <td class="border px-4 py-3 text-sm whitespace-nowrap">${order.jumlah}</td>
+                    <td class="border px-4 py-3 text-sm whitespace-nowrap">${order.opsi}</td>
+                    <td class="border px-4 py-3 text-sm whitespace-nowrap">${order.kemasan}</td>
+                    <td class="class="border px-4 py-3 text-sm whitespace-nowrap space-x-2">
+                        <button class="edit-btn text-blue-500 hover:text-blue-700" data-id="${order.id}">
+                            Edit
+                        </button>
+                        <br>
+                        <button class="delete-btn text-red-500 hover:text-red-700" data-id="${order.id}">
+                            Hapus
+                        </button>
+                    </td>
+
+                `;
+
+                ordersTableBody.appendChild(row);
+            });
+
+            // Add event listeners to delete buttons
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    deleteOrder(id);
+                });
+            });
+            // Add event listeners to edit buttons
+            document.querySelectorAll('.edit-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    editOrder(id);
+                });
+            });
+
         }
-    }
 
-    function editOrder(id) {
-        const orders = JSON.parse(localStorage.getItem('bakeryOrders') || '[]');
-        const order = orders.find(o => o.id === id);
-        if (!order) return alert("Pesanan tidak ditemukan.");
-
-        // Isi dropdown kue
-        const kueSelect = document.getElementById('edit-kue');
-        kueSelect.innerHTML = cakes.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
-        const opsiSelect = document.getElementById('edit-opsi');
-        function updateOpsiDropdown() {
-            const selectedKue = kueSelect.value;
-            const kue = cakes.find(c => c.name === selectedKue);
-            
-            if (kue && kue.opsi) {
-                opsiSelect.innerHTML = kue.opsi.map(o => `<option value="${o}">${o}</option>`).join('');
-            } else {
-                opsiSelect.innerHTML = '<option value="">Tidak ada opsi</option>';
+        // Function to delete a specific order
+        function deleteOrder(id) {
+            if (confirm('Yakin ingin menghapus pesanan ini?')) {
+                let orders = JSON.parse(localStorage.getItem('bakeryOrders') || '[]');
+                orders = orders.filter(order => order.id !== id);
+                localStorage.setItem('bakeryOrders', JSON.stringify(orders));
+                loadOrders(); // Refresh the table
             }
         }
-        updateOpsiDropdown();
-        kueSelect.addEventListener('change', updateOpsiDropdown);
-        // Isi form
-        document.getElementById('edit-id').value = order.id;
-        document.getElementById('edit-nama').value = order.nama;
-        document.getElementById('edit-hp').value = order.hp;
-        document.getElementById('edit-kue').value = order.jenisKue;
-        document.getElementById('edit-jumlah').value = order.jumlah;
-        document.getElementById('edit-opsi').value = order.opsi;
-        document.getElementById('edit-kemasan').value = order.kemasan;
 
-        document.getElementById('editModal').classList.remove('hidden');
-    }
+        function editOrder(id) {
+            const orders = JSON.parse(localStorage.getItem('bakeryOrders') || '[]');
+            const order = orders.find(o => o.id === id);
+            if (!order) return alert("Pesanan tidak ditemukan.");
 
-function closeEditModal() {
-    document.getElementById('editModal').classList.add('hidden');
-}
+            // Isi dropdown kue
+            const kueSelect = document.getElementById('edit-kue');
+            kueSelect.innerHTML = cakes.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+            const opsiSelect = document.getElementById('edit-opsi');
+            function updateOpsiDropdown() {
+                const selectedKue = kueSelect.value;
+                const kue = cakes.find(c => c.name === selectedKue);
+                
+                if (kue && kue.opsi) {
+                    opsiSelect.innerHTML = kue.opsi.map(o => `<option value="${o}">${o}</option>`).join('');
+                } else {
+                    opsiSelect.innerHTML = '<option value="">Tidak ada opsi</option>';
+                }
+            }
+            updateOpsiDropdown();
+            kueSelect.addEventListener('change', updateOpsiDropdown);
+            // Isi form
+            document.getElementById('edit-id').value = order.id;
+            document.getElementById('edit-nama').value = order.nama;
+            document.getElementById('edit-hp').value = order.hp;
+            document.getElementById('edit-kue').value = order.jenisKue;
+            document.getElementById('edit-jumlah').value = order.jumlah;
+            document.getElementById('edit-opsi').value = order.opsi;
+            document.getElementById('edit-kemasan').value = order.kemasan;
 
-    // Simpan perubahan
-    document.getElementById('editForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        const orders = JSON.parse(localStorage.getItem('bakeryOrders') || '[]');
-        const id = parseInt(document.getElementById('edit-id').value, 10); // <=== pakai parseInt
-        const order = orders.find(o => o.id === id);
-        if (!order) return alert("Pesanan tidak ditemukan.");
-
-        order.nama = document.getElementById('edit-nama').value;
-        order.hp = document.getElementById('edit-hp').value;
-        order.jenisKue = document.getElementById('edit-kue').value;
-        order.jumlah = document.getElementById('edit-jumlah').value;
-        order.opsi = document.getElementById('edit-opsi').value;
-        order.kemasan = document.getElementById('edit-kemasan').value;
-
-        localStorage.setItem('bakeryOrders', JSON.stringify(orders));
-        closeEditModal();
-        loadOrders();
-    });
-    // Function to clear all orders
-    function clearAllOrders() {
-        if (confirm('Yakin ingin menghapus SEMUA data pesanan? Tindakan ini tidak dapat dibatalkan.')) {
-            localStorage.removeItem('bakeryOrders');
-            loadOrders(); // Refresh the table
+            document.getElementById('editModal').classList.remove('hidden');
         }
+
+    function closeEditModal() {
+        document.getElementById('editModal').classList.add('hidden');
     }
 
-    // Event listeners
-    document.addEventListener('DOMContentLoaded', function() {
-        // Initial load
-        loadOrders();
+        // Simpan perubahan
+        document.getElementById('editForm').addEventListener('submit', function (e) {
+            e.preventDefault();
 
-        // Search input
-        document.getElementById('searchInput').addEventListener('input', loadOrders);
+            const orders = JSON.parse(localStorage.getItem('bakeryOrders') || '[]');
+            const id = parseInt(document.getElementById('edit-id').value, 10); // <=== pakai parseInt
+            const order = orders.find(o => o.id === id);
+            if (!order) return alert("Pesanan tidak ditemukan.");
 
-        // Filter dropdown
-        document.getElementById('filterJenis').addEventListener('change', loadOrders);
+            order.nama = document.getElementById('edit-nama').value;
+            order.hp = document.getElementById('edit-hp').value;
+            order.jenisKue = document.getElementById('edit-kue').value;
+            order.jumlah = document.getElementById('edit-jumlah').value;
+            order.opsi = document.getElementById('edit-opsi').value;
+            order.kemasan = document.getElementById('edit-kemasan').value;
 
-        // Clear filters button
-        document.getElementById('clearFilters').addEventListener('click', function() {
-            document.getElementById('searchInput').value = '';
-            document.getElementById('filterJenis').value = '';
+            localStorage.setItem('bakeryOrders', JSON.stringify(orders));
+            closeEditModal();
             loadOrders();
         });
+        // Function to clear all orders
+        function clearAllOrders() {
+            if (confirm('Yakin ingin menghapus SEMUA data pesanan? Tindakan ini tidak dapat dibatalkan.')) {
+                localStorage.removeItem('bakeryOrders');
+                loadOrders(); // Refresh the table
+            }
+        }
 
-        // Clear all data button
-        document.getElementById('clearAllData').addEventListener('click', clearAllOrders);
-    });
-</script>
-</body>
-</html>
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initial load
+            loadOrders();
+
+            // Search input
+            document.getElementById('searchInput').addEventListener('input', loadOrders);
+
+            // Filter dropdown
+            document.getElementById('filterJenis').addEventListener('change', loadOrders);
+
+            // Clear filters button
+            document.getElementById('clearFilters').addEventListener('click', function() {
+                document.getElementById('searchInput').value = '';
+                document.getElementById('filterJenis').value = '';
+                loadOrders();
+            });
+
+            // Clear all data button
+            document.getElementById('clearAllData').addEventListener('click', clearAllOrders);
+        });
+    </script>
+</x-app-layout>

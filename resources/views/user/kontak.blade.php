@@ -1,44 +1,6 @@
-<!DOCTYPE html>
-    <head>
-        <title>Contact Us</title>
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="bg-pink-50 text-gray-800">
+<x-app-layout>
         <div class="relative flex size-full min-h-screen flex-col bg-[#fcf8f9] group/design-root overflow-x-hidden" style='font-family: Epilogue, "Noto Sans", sans-serif;'>
             <div class="layout-container flex h-full grow flex-col">
-                <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f3e7ea] px-10 py-3 bg-[#fcf8f9] shadow-md">
-                    <!-- Bakery -->
-                    <div class="flex items-center gap-4 text-[#1b0d11]">
-                      <div class="size-4">
-                          <defs>
-                            <clipPath id="clip0_6_319"><rect width="48" height="48" fill="white"></rect></clipPath>
-                          </defs>
-                      </div>
-                      <h2 class="text-[#1b0d11] text-lg font-bold leading-tight tracking-[-0.015em]">Bakery</h2>
-                    </div>
-                    <div class="flex flex-1 justify-end gap-8">
-                      <div class="flex items-center gap-9">
-                        <!-- Home -->
-                        <a class="text-[#1b0d11] text-sm font-medium leading-normal" href="Home.html">Home</a>
-                        <!-- All Cakes -->
-                        <a class="text-[#1b0d11] text-sm font-medium leading-normal" href="Home.html#all-cakes">All Cakes</a>
-                        <!-- Custom Cake -->
-                        <a class="text-[#1b0d11] text-sm font-medium leading-normal" href="Custom.html">Custom Cake</a>
-                        <!--FAQ-->
-                        <a class="text-[#1b0d11] text-sm font-medium leading-normal" href="FAQ.html">FAQ</a>
-                        <!-- List Pesanan -->
-                        <a class="text-[#1b0d11] text-sm font-medium leading-normal" href="datapesanan.html">List Pesanan</a>
-                        <!-- About -->
-                        <a class="text-[#1b0d11] text-sm font-medium leading-normal" href="about.html">About</a>
-                        <button class="text-[#1b0d11] text-sm font-medium leading-normal" onclick="logout()" >Logout</button>
-                      </div>
-                      <!-- Constact Us -->
-                      <a href="kontak.html"
-                        class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-[#ee2b5c] text-[#fcf8f9] text-sm font-bold leading-normal tracking-[0.015em]">
-                        <span class="truncate">Contact Us</span>
-                    </a>
-                    </div>
-                </header>
                 <section class="min-h-screen flex flex-col items-center justify-center px-6 py-12">
                     <h1 class="text-4xl font-bold text-pink-600 mb-10">Get in Touch With Us!</h1>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl w-full">
@@ -64,5 +26,4 @@
                 </section>
             </div>
         </div>
-    </body>
-</html>
+</x-app-layout>
